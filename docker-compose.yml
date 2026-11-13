@@ -1,0 +1,29 @@
+services:
+  llama-server:
+    image: ghcr.io/ggml-org/llama.cpp:full-rocm
+    container_name: llama.cpp
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ${LLAMA_MODELS:-${HOME}/llama-cpp-models}:/models:ro
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    entrypoint: /app/llama-server
+    command: >
+      --host 0.0.0.0
+      --port "11434"
+      --model ${LLAMA_MODEL_PATH:-/models/Qwen3.8-27B-GSQ-RCO-IQ3_S-mtp.gguf}
+      --alias Qwen3.8-gsq-rco
+      --ctx-size "98304"
+      --flash-attn on
+      --cache-type-k q4_0
+      --cache-type-v q4_0
+      --jinja
+      --parallel 1
+      --n-gpu-layers 999
+      --spec-type draft-mtp
+      --spec-draft-n-max 3
+      --batch-size 512
+      --ubatch-size 128
