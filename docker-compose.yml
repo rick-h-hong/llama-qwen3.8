@@ -41,6 +41,8 @@ configs:
       c = 98304
       n-gpu-layers = 999
       jinja = true
+      chat-template-kwargs = {"enable_thinking": false}
+      reasoning-budget = 0
       load-on-startup = false
 
       [qwen3.8]
