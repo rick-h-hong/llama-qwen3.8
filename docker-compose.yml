@@ -40,7 +40,6 @@ configs:
       alias = Qwen3.5
       c = 98304
       n-gpu-layers = 999
-      flash-attn = on
       jinja = true
       load-on-startup = false
 
